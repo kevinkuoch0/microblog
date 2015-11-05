@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Microblog</title>
+ <link rel="stylesheet" type="text/css" href="css/style.css">
+
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="js/jquery-1.7.2.min.js"><\/script>')</script>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+
+  <%= csrf_meta_tags %>
+</head>
+<body>
+
+<div class="header">
+	<div class="container">
+		<% if current_user %>
+			<h3>Hello <%= current_user.fname %> </h3>
+		<% else %>
+			<%= nil %>
+		<% end %>
+			<ul class="nav nav-tabs pull-right">
+				<li>
+					<% if session[:id] != nil %>
+						<%= link_to "Home", users_path %>
+					<% else %>
+						<%= link_to "Home", root_path %>
+					<% end %>
+
+
+				</li>
+
+				<li>
+					<%= link_to "User List", users_path %>
+				</li>
+
+				<li>
+					<% if session[:id] != nil %>
+						<%= link_to "My Profile", user_path(current_user.id) %>
+					<% else %>
+						<%= link_to "Sign Up", new_user_path %>
+					<% end %>
+
+
+				</li>
+
+				<li>
+					<%= link_to "Feed", posts_path %>
+				</li>
+
+				<li>
+				<%= link_to "Sign Out", signout_path, method: :delete %>
+				</li>
+
+			</ul>
+	</div>
+</div>
+
+
+<div class="wrapper">
+
+<%= flash[:notice] if flash[:notice] %>
+<%= flash[:alert] if flash[:alert] %>
+
+	<div class="container">
+
+		<%= yield %>
+
+		</div>
+
+</div>
+
+
+<div class="footer">
+
+
+</div>
+
+</body>
+
+
+</html>
